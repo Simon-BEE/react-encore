@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 
-import Navbar from './Components/Navbar' ;
-import HomePage from './Pages/HomePage' ;
-import CustomersPage from './Pages/CustomersPage' ;
+import Navbar from './Components/Navbar';
+import HomePage from './Pages/HomePage';
+import CustomersPage from './Pages/CustomersPage';
 
 require('../css/app.css');
 
