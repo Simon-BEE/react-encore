@@ -1,0 +1,11 @@
+.env
+.vscode
+www/vendor
+www/node_modules
+www/composer.lock
+www/public/adminer.php
+www/tests/ExoTest/
+www/public/temp
+yarn.lock
+yarn-error.log
+.directory
