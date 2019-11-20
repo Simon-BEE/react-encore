@@ -13,7 +13,7 @@ const PaginationComponent = ({currentPage, itemsPerPage, length, onPageChange}) 
     return (
         <div>
             <ul className="pagination pagination-sm justify-content-center">
-                <li className={"page-item" + (currentPage === 1 && " disabled")}>
+                <li className={"page-item" + (currentPage === 0 && " disabled")}>
                     <button className="page-link" onClick={() => onPageChange(currentPage - 1)}>&laquo;</button>
                 </li>
                 { pages.map(page =>
