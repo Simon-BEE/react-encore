@@ -24,8 +24,8 @@ const InvoicesPages = (props) => {
         try {
             const data = await InvoicesApi.findAll();
             setInvoices(data);
-        } catch {
-            console.log(error.response)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -40,8 +40,8 @@ const InvoicesPages = (props) => {
 
         try {
             await InvoicesApi.delete(id);
-        } catch {
-            console.log(error.response);
+        } catch (error) {
+            console.log(error);
             setInvoices(originalInvoices);
         }
     }

@@ -22,7 +22,7 @@ const Navbar = (props) => {
                         <a className="btn btn-info" href="#">Inscription</a>
                     </li>
                     <li className="nav-item">
-                        <a className="btn btn-primary" href="#">Connexion</a>
+                        <a className="btn btn-primary" href="#login">Connexion</a>
                     </li>
                     <li className="nav-item">
                         <a className="btn btn-danger" href="#">Deconnexion</a>

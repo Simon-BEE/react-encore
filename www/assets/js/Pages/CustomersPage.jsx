@@ -24,8 +24,8 @@ const CustomersPage = (props) => {
         try {
             const data = await CustomersApi.findAll();
             setCustomers(data);
-        } catch {
-            console.log(error.response)
+        } catch (error) {
+            console.log(error)
         }
     }
     
@@ -44,8 +44,8 @@ const CustomersPage = (props) => {
 
         try {
             await CustomerApi.delete(id);
-        } catch {
-            console.log(error.response);
+        } catch (error) {
+            console.log(error);
             setCustomers(originalCustomers);
         }
     }
