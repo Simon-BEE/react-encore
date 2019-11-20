@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import PaginationComponent from '../Components/PaginationComponent';
 import CustomersApi from '../Services/CustomersApi';
@@ -92,10 +91,10 @@ const CustomersPage = (props) => {
                 </tbody>
             </table>
             <PaginationComponent 
-            currentPage={ currentPage }
-            itemsPerPage={ itemsPerPage }
-            length={ filteredCustomers.length }
-            onPageChange={ handlePageChange }
+                currentPage={ currentPage }
+                itemsPerPage={ itemsPerPage }
+                length={ filteredCustomers.length }
+                onPageChange={ handlePageChange }
             />
         </>
     );
