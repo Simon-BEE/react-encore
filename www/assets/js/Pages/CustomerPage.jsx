@@ -52,6 +52,7 @@ const CustomerPage = ({match, history}) => {
             if (editing) {
                 await CustomersApi.update(id, customer);
                 //TODO flash
+                history.replace('/customers');
             }else{
                 await CustomersApi.create(customer);
                 //TODO flash
