@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-const LoginPage = (props) => {
+import AuthApi from '../Services/AuthApi';
+
+const LoginPage = ({onLogin, history}) => {
 
     const [credentials, setCredentials] = useState({'username':'', 'password':''});
     const [error, setError] = useState('');
 
     const handleChange = ({currentTarget}) => {
-        const value = currentTarget.value;
-        const name = currentTarget.name;
+        const {value, name} = currentTarget;
         setCredentials({...credentials, [name] : value });
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(credentials);
+        console.log('USER: ',credentials);
         try {
-            const token = await Axios.post('http://localhost:8180/api/login_check', credentials)
-            .then(response => response.data.token);
+            await AuthApi.authenticate(credentials);
             setError('');
-            window.localStorage.setItem('authToken', token)
+            onLogin(true);
+            history.replace('/customers');
         } catch (error) {
-            console.log(error);
+            console.log('ERROR: ',error.response);
             setError('Identifiants inconnus !');
         }
     }
-
-    console.log(window.localStorage.getItem('authToken'));
 
     return ( 
         <>

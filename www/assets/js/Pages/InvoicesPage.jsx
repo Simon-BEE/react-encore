@@ -11,7 +11,7 @@ const InvoicesPages = (props) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState("");
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 20;
     const filteredInvoices = invoices.filter(i => 
         i.customer.firstName.toLowerCase().includes(search.toLowerCase()) || 
         i.customer.lastName.toLowerCase().includes(search.toLowerCase()) || 
