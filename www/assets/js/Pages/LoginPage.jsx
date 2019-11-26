@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import React, { useState, useContext } from 'react';
 
 import AuthApi from '../Services/AuthApi';
+import AuthContext from '../Contexts/AuthContext';
 
-const LoginPage = ({onLogin, history}) => {
+const LoginPage = ({history}) => {
 
     const [credentials, setCredentials] = useState({'username':'', 'password':''});
     const [error, setError] = useState('');
+    const {setIsAuthenticated} = useContext(AuthContext);
 
     const handleChange = ({currentTarget}) => {
         const {value, name} = currentTarget;
@@ -16,11 +17,13 @@ const LoginPage = ({onLogin, history}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('USER: ',credentials);
+
         try {
             await AuthApi.authenticate(credentials);
             setError('');
-            onLogin(true);
+            setIsAuthenticated(true);
             history.replace('/customers');
+            
         } catch (error) {
             console.log('ERROR: ',error.response);
             setError('Identifiants inconnus !');

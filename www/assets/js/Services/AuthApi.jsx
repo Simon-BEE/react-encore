@@ -49,7 +49,7 @@ const isAuthenticated = () => {
 const logout = () => {
     window.localStorage.removeItem('authToken');
     delete Axios.defaults.headers['Authorization'];
-    console.log('Déconnexion réussie');
+    console.log('Déconnecté');
 }
 
 export default {
