@@ -10,6 +10,8 @@ import InvoicesPages from './Pages/InvoicesPage';
 import LoginPage from './Pages/LoginPage';
 import AuthApi from './Services/AuthApi';
 import PrivateRoute from './Components/PrivateRoute';
+import CustomerPage from './Pages/CustomerPage';
+import InvoicePage from './Pages/InvoicePage';
 
 require('../css/app.css');
 
@@ -34,6 +36,8 @@ const App = () => {
                     <Switch>
                         <PrivateRoute path="/customers" component={CustomersPage} />
                         <PrivateRoute path="/invoices" component={InvoicesPages} />
+                        <PrivateRoute path="/customer/:id" component={CustomerPage} />
+                        <PrivateRoute path="/invoice/:id" component={InvoicePage} />
                         <Route path='/login' component={LoginPage} />
                         <Route path='/' component={HomePage} />
                     </Switch>
