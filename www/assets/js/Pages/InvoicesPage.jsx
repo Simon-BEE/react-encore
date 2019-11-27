@@ -99,7 +99,7 @@ const InvoicesPages = (props) => {
                         <td className="text-center">{invoice.amount.toLocaleString()} €</td>
                         <td className="text-center"><span className={"badge badge-pill badge-"+STATUS_CLASSES[invoice.status]}>{STATUS_LABEL[invoice.status]}</span></td>
                         <td>
-                            <button className="btn btn-sm btn-info">Editer</button>
+                            <Link className="btn btn-sm btn-info" to={"/invoice/"+invoice.id}>Editer</Link>
                             <button className="btn btn-sm btn-danger" onClick={() => handleDelete(invoice.id)}>Supprimer</button>
                         </td>
                     </tr>

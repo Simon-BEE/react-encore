@@ -5,9 +5,10 @@ import CustomersApi from '../Services/CustomersApi';
 
 
 const CustomerPage = ({match, history}) => {
-    
+    //recuperation du paramètre dans l'url
     const {id = 'new'} = match.params;
 
+    //initialisation d'un customer vide
     const [customer, setCustomer] = useState({
         firstName: '',
         lastName: '',
@@ -15,6 +16,7 @@ const CustomerPage = ({match, history}) => {
         company: ''
     });
 
+    //initialisation d'une erreur vide
     const [error, setError] = useState({
         firstName: '',
         lastName: '',
@@ -22,18 +24,24 @@ const CustomerPage = ({match, history}) => {
         company: ''
     });
 
+    //initialisation de variable d'édition à faux
     const [editing, setEditing] = useState(false);
 
+
+    //recupère les données d'un customer si son id est dans l'url
     const fetchCustomer = async id => {
         try {
-            const {firstName, lastName, email, company} = await CustomersApi.find(id);;
+            const {firstName, lastName, email, company} = await CustomersApi.find(id);
+            //insère ces données dans la variable customer
             setCustomer({firstName, lastName, email, company});
         } catch (error) {
+            //affichage d'erreur et redirection
             console.log(error.response);
             history.replace('/customers');
         }
     }
 
+    //vérifie si le paramètre est différent de 'new' si c'est le cas on va chercher le customer grâce au paramètre et on définie la variable d'edition à vrai
     useEffect(() => {
         if (id !== 'new') {
             setEditing(true);
@@ -41,29 +49,34 @@ const CustomerPage = ({match, history}) => {
         }
     }, [id]);
 
+    //permet la modification des inputs, en insérant les données dans la variable customer
     const handleChange = ({currentTarget}) => {
         const {value, name} = currentTarget;
         setCustomer({...customer, [name] : value});
     }
 
+    // traite l'envoie du formulaire
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             if (editing) {
+                // si édition on update un customer
                 await CustomersApi.update(id, customer);
                 //TODO flash
                 history.replace('/customers');
             }else{
+                //sinon crée un customer
                 await CustomersApi.create(customer);
                 //TODO flash
                 history.replace('/customers');
             }
             setError({});
         } catch ({response}) {
+            //traite des erreurs grâce au message déjà défini dans le propertyPath
             const {violations} = response.data;
             if (violations) {
                 const apiErrors = {};
-                violations.map((violation) => {
+                violations.map(({propertyPath, message}) => {
                     apiErrors[propertyPath] = message;
                 });
                 setError(apiErrors);
