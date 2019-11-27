@@ -33,7 +33,7 @@ const Navbar = ({history}) => {
                     {!isAuthenticated ? 
                         <>
                             <li className="nav-item">
-                                <NavLink className="btn btn-info" to="#">Inscription</NavLink>
+                                <NavLink className="btn btn-info" to="/register">Inscription</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink className="btn btn-primary" to="/login">Connexion</NavLink>

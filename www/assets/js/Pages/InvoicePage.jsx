@@ -13,8 +13,8 @@ const InvoicePage = ({history, match}) => {
     const [editing, setEditing] = useState(false);
 
     const [invoice, setInvoice] = useState({
-        amount: '',
-        customer: '',
+        amount: 0,
+        customer: {},
         status: 'SENT'
     });
 
@@ -67,6 +67,7 @@ const InvoicePage = ({history, match}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
+            console.log(invoice);
             if (editing) {
                 await InvoicesApi.update(id, invoice);
             }else{

@@ -8,6 +8,7 @@ import HomePage from './Pages/HomePage';
 import CustomersPage from './Pages/CustomersPage';
 import InvoicesPages from './Pages/InvoicesPage';
 import LoginPage from './Pages/LoginPage';
+import RegisterPage from './Pages/RegisterPage';
 import AuthApi from './Services/AuthApi';
 import PrivateRoute from './Components/PrivateRoute';
 import CustomerPage from './Pages/CustomerPage';
@@ -39,6 +40,7 @@ const App = () => {
                         <PrivateRoute path="/customer/:id" component={CustomerPage} />
                         <PrivateRoute path="/invoice/:id" component={InvoicePage} />
                         <Route path='/login' component={LoginPage} />
+                        <Route path='/register' component={RegisterPage} />
                         <Route path='/' component={HomePage} />
                     </Switch>
                 </main>

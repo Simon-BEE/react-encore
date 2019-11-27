@@ -44,7 +44,7 @@ const CustomersPage = (props) => {
         setCustomers(customers.filter(customer => customer.id !== id));
 
         try {
-            await CustomerApi.delete(id);
+            await CustomersApi.delete(id);
         } catch (error) {
             console.log(error);
             setCustomers(originalCustomers);
