@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import Field from '../Components/Forms/Field';
-import Axios from 'axios';
 import UserApi from '../Services/UserApi';
 
 const RegisterPage = ({history}) => {

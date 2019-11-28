@@ -10,10 +10,11 @@ const setup = () => {
     const token = window.localStorage.getItem('authToken');
     if (token) {
         const jwtData = jwtDecode(token);
-        console.log(jwtData);
+        console.log('decode', jwtData);
         if (jwtData.exp * 1000 > new Date().getTime()) {
             setAxiosToken(token);
             console.log("Connexion établie");
+            return jwtData.id;
         }else{
             logout();
         }

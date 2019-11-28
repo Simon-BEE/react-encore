@@ -24,10 +24,11 @@ const App = () => {
 
     const contextValue = { 
         isAuthenticated, 
-        setIsAuthenticated 
+        setIsAuthenticated, 
+        userId
     };
 
-    AuthApi.setup();
+    const userId = AuthApi.setup();
 
     return(
         <AuthContext.Provider value={contextValue} >

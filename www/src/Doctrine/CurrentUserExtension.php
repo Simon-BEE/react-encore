@@ -22,31 +22,30 @@ class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryIt
         $this->auth = $checker;
     }
 
-    // private function addWhere(QueryBuilder $queryBuilder, string $resourceClass)
-    // {
-    //     $user = $this->security->getUser();
+    private function addWhere(QueryBuilder $queryBuilder, string $resourceClass)
+    {
+        $user = $this->security->getUser();
 
-    //     if($resourceClass === Customer::class || $resourceClass === Invoice::class
-    //         && !$this->auth->isGranted('ROLE_ADMIN')
-    //         && $user instanceof User) {
-    //         $rootAlias = $queryBuilder->getRootAliases()[0];
+        if($resourceClass === Customer::class || $resourceClass === Invoice::class
+            && !$this->auth->isGranted('ROLE_ADMIN')
+            && $user instanceof User) {
+            $rootAlias = $queryBuilder->getRootAliases()[0];
 
-    //         if($resourceClass === Customer::class) {
-    //             $queryBuilder->andWhere("$rootAlias.user = :user");
-    //         }
-    //         elseif($resourceClass === Invoice::class) {
-    //             $queryBuilder->join("$rootAlias.customer", "c")
-    //                         ->where("c.user = :user");
-    //         }
-    //         $queryBuilder->setParameter("user", $user);
-    //     }
-    // }
+            if($resourceClass === Customer::class) {
+                $queryBuilder->andWhere("$rootAlias.user = :user");
+            }
+            elseif($resourceClass === Invoice::class) {
+                $queryBuilder->join("$rootAlias.customer", "c")
+                            ->where("c.user = :user");
+            }
+            $queryBuilder->setParameter("user", $user);
+        }
+    }
     public function applyToCollection(QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, 
         string $operationName = null) {
         
-       // $this->addWhere($queryBuilder, $resourceClass);
-
+        $this->addWhere($queryBuilder, $resourceClass);
     }
 
     public function applyToItem(QueryBuilder $queryBuilder,

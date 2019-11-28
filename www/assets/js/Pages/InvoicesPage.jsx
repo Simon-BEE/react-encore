@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import moment from "moment";
 import PaginationComponent from '../Components/PaginationComponent';
 import InvoicesApi from '../Services/InvoicesApi';
+import AuthContext from '../Contexts/AuthContext';
 
 
 const InvoicesPages = (props) => {
@@ -11,12 +12,14 @@ const InvoicesPages = (props) => {
     const [invoices, setInvoices] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState("");
+    const {userId} = useContext(AuthContext);
 
     const itemsPerPage = 20;
     const filteredInvoices = invoices.filter(i => 
         i.customer.firstName.toLowerCase().includes(search.toLowerCase()) || 
         i.customer.lastName.toLowerCase().includes(search.toLowerCase()) || 
         i.status.toLowerCase().includes(search.toLowerCase()) || 
+        i.user.id === userId || 
         i.amount > search
         );
     const paginatedComponent = PaginationComponent.getData(filteredInvoices, currentPage, itemsPerPage);

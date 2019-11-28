@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import PaginationComponent from '../Components/PaginationComponent';
 import CustomersApi from '../Services/CustomersApi';
+import AuthContext from '../Contexts/AuthContext';
 
 
 const CustomersPage = (props) => {
@@ -10,6 +11,7 @@ const CustomersPage = (props) => {
     const [customers, setCustomers] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState("");
+    const { userId } = useContext(AuthContext);
 
     const itemsPerPage = 10;
     const filteredCustomers = customers.filter(c => 
@@ -17,6 +19,7 @@ const CustomersPage = (props) => {
         c.lastName.toLowerCase().includes(search.toLowerCase()) || 
         c.email.toLowerCase().includes(search.toLowerCase()) ||
         c.company.toLowerCase().includes(search.toLowerCase()) ||
+        c.user.id == userId ||
         c.totalAmount > search
         );
     const paginatedComponent = PaginationComponent.getData(filteredCustomers, currentPage, itemsPerPage);
@@ -56,7 +59,6 @@ const CustomersPage = (props) => {
         setCurrentPage(0);
     }
     
-
     return ( 
         <>
             <div className="d-flex justify-content-between">

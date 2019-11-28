@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
 
 import Field from '../Components/Forms/Field';
 import Select from '../Components/Forms/Select';
 import CustomersApi from '../Services/CustomersApi';
 import InvoicesApi from '../Services/InvoicesApi';
+import AuthContext from '../Contexts/AuthContext';
 
 
 const InvoicePage = ({history, match}) => {
@@ -17,6 +18,8 @@ const InvoicePage = ({history, match}) => {
         customer: {},
         status: 'SENT'
     });
+
+    const {userId} = useContext(AuthContext);
 
     const fetchInvoice = async (id) => {
         try {
@@ -42,9 +45,10 @@ const InvoicePage = ({history, match}) => {
     const fetchCustomers = async () => {
         try {
             const data = await CustomersApi.findAll();
-            setCustomers(data);
+            const filteredCustomers = data.filter(c => c.user.id === userId);
+            setCustomers(filteredCustomers);
             if (!invoice.customer) {
-                setInvoice({...invoice, customer: data[0].id});
+                setInvoice({...invoice, customer: filteredCustomers[0].id});
             }
         } catch (error) {
             console.log(error);
@@ -67,10 +71,10 @@ const InvoicePage = ({history, match}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log(invoice);
             if (editing) {
                 await InvoicesApi.update(id, invoice);
             }else{
+                console.log('create',invoice);
                 await InvoicesApi.create(invoice);
             }
             setErrors({});
