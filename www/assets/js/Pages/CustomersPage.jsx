@@ -5,10 +5,12 @@ import {toast} from 'react-toastify';
 import PaginationComponent from '../Components/PaginationComponent';
 import CustomersApi from '../Services/CustomersApi';
 import AuthContext from '../Contexts/AuthContext';
+import TableLoader from '../Components/Loaders/TableLoader';
 
 
 const CustomersPage = (props) => {
 
+    const [loading, setLoading] = useState(true);
     const [customers, setCustomers] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState("");
@@ -29,6 +31,7 @@ const CustomersPage = (props) => {
         try {
             const data = await CustomersApi.findAll();
             setCustomers(data);
+            setLoading(false);
         } catch (error) {
             console.log(error)
         }
@@ -97,12 +100,16 @@ const CustomersPage = (props) => {
                     )}
                 </tbody>
             </table>
-            <PaginationComponent 
-                currentPage={ currentPage }
-                itemsPerPage={ itemsPerPage }
-                length={ filteredCustomers.length }
-                onPageChange={ handlePageChange }
-            />
+            { loading && <TableLoader />}
+            { itemsPerPage < filteredCustomers.length &&
+                <PaginationComponent 
+                    currentPage={ currentPage }
+                    itemsPerPage={ itemsPerPage }
+                    length={ filteredCustomers.length }
+                    onPageChange={ handlePageChange }
+                />
+            }
+            
         </>
     );
 }

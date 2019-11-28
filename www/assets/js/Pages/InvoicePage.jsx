@@ -7,13 +7,14 @@ import Select from '../Components/Forms/Select';
 import CustomersApi from '../Services/CustomersApi';
 import InvoicesApi from '../Services/InvoicesApi';
 import AuthContext from '../Contexts/AuthContext';
+import FormLoader from '../Components/Loaders/FormLoader';
 
 
 const InvoicePage = ({history, match}) => {
+
+    const [loading, setLoading] = useState(true);
     const {id = 'new'} = match.params;
-
     const [editing, setEditing] = useState(false);
-
     const [invoice, setInvoice] = useState({
         amount: 0,
         customer: {},
@@ -51,8 +52,10 @@ const InvoicePage = ({history, match}) => {
             if (!invoice.customer) {
                 setInvoice({...invoice, customer: data[0].id});
             }
+            setLoading(false);
         } catch (error) {
             console.log(error);
+            toast.error('Impossible de charger les clients.');
         }
     };
 
@@ -97,6 +100,7 @@ const InvoicePage = ({history, match}) => {
     return ( 
         <>
             {!editing ? <h1>Ajouter une facture</h1> : <h1>Modifier une facture</h1>}
+            { loading && <FormLoader />}
             <form action="" onSubmit={handleSubmit}>
                 <Field name="amount" label="Montant" placeholder="Montant de la facture" type="number"
                     value={invoice.amount}

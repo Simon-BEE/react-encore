@@ -6,10 +6,12 @@ import moment from "moment";
 import PaginationComponent from '../Components/PaginationComponent';
 import InvoicesApi from '../Services/InvoicesApi';
 import AuthContext from '../Contexts/AuthContext';
+import TableLoader from '../Components/Loaders/TableLoader';
 
 
 const InvoicesPages = (props) => {
 
+    const [loading, setLoading] = useState(true);
     const [invoices, setInvoices] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState("");
@@ -29,6 +31,7 @@ const InvoicesPages = (props) => {
         try {
             const data = await InvoicesApi.findAll();
             setInvoices(data);
+            setLoading(false);
         } catch (error) {
             console.log(error)
         }
@@ -112,12 +115,16 @@ const InvoicesPages = (props) => {
                     )}
                 </tbody>
             </table>
-            <PaginationComponent
-                currentPage={ currentPage }
-                itemsPerPage={ itemsPerPage }
-                length={ filteredInvoices.length }
-                onPageChange={ handlePageChange }
-            />
+            { loading && <TableLoader />}
+            { itemsPerPage < filteredInvoices.length &&
+                <PaginationComponent
+                    currentPage={ currentPage }
+                    itemsPerPage={ itemsPerPage }
+                    length={ filteredInvoices.length }
+                    onPageChange={ handlePageChange }
+                />
+            }
+            
         </>
     );
 }

@@ -4,9 +4,12 @@ import {toast} from 'react-toastify';
 
 import Field from '../Components/Forms/Field';
 import CustomersApi from '../Services/CustomersApi';
+import FormLoader from '../Components/Loaders/FormLoader';
 
 
 const CustomerPage = ({match, history}) => {
+
+    const [loading, setLoading] = useState(true);
     //recuperation du paramètre dans l'url
     const {id = 'new'} = match.params;
 
@@ -39,6 +42,7 @@ const CustomerPage = ({match, history}) => {
         } catch (error) {
             //affichage d'erreur et redirection
             console.log(error.response);
+            toast.error('Impossible de charger les clients.');
             history.replace('/customers');
         }
     }
@@ -49,6 +53,7 @@ const CustomerPage = ({match, history}) => {
             setEditing(true);
             fetchCustomer(id);
         }
+        setLoading(false);
     }, [id]);
 
     //permet la modification des inputs, en insérant les données dans la variable customer
@@ -89,6 +94,7 @@ const CustomerPage = ({match, history}) => {
     return ( 
         <>
         {!editing ? <h1>Création d'un client</h1> : <h1>Modification d'un client</h1>}
+        { loading && <FormLoader />}
         <form action="" onSubmit={handleSubmit}>
             <Field name={'lastName'} label={'Nom de famille'} placeholder={'Nom de famille du client'} 
             value={customer.lastName} onChange={handleChange} error={error.lastName} />
