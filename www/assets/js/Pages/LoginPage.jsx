@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import {toast} from 'react-toastify';
 
 import AuthApi from '../Services/AuthApi';
 import AuthContext from '../Contexts/AuthContext';
@@ -23,6 +24,7 @@ const LoginPage = ({history}) => {
             await AuthApi.authenticate(credentials);
             setError('');
             setIsAuthenticated(true);
+            toast.info('Connexion réussie');
             history.replace('/customers');
             
         } catch (error) {

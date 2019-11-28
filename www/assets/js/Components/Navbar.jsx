@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
-import {NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 import AuthApi from '../Services/AuthApi';
 import AuthContext from '../Contexts/AuthContext';
@@ -10,6 +11,7 @@ const Navbar = ({history}) => {
     const handleLogout = () => {
         AuthApi.logout();
         setIsAuthenticated(false);
+        toast('Vous êtes bien déconnecté.');
         history.replace('/');
     }
 

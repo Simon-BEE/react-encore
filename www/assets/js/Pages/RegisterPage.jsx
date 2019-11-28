@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import {toast} from 'react-toastify';
+
 import Field from '../Components/Forms/Field';
 import UserApi from '../Services/UserApi';
 
@@ -37,6 +39,7 @@ const RegisterPage = ({history}) => {
         try {
             await UserApi.register(user);
             setErrors('');
+            toast.info('Inscription réussie.')
             history.replace('/login');
         } catch (error) {
             console.log(error);

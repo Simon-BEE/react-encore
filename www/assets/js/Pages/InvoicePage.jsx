@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Link } from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 import Field from '../Components/Forms/Field';
 import Select from '../Components/Forms/Select';
@@ -45,10 +46,10 @@ const InvoicePage = ({history, match}) => {
     const fetchCustomers = async () => {
         try {
             const data = await CustomersApi.findAll();
-            const filteredCustomers = data.filter(c => c.user.id === userId);
-            setCustomers(filteredCustomers);
+            // const filteredCustomers = data.filter(c => c.user.id === userId);
+            setCustomers(data);
             if (!invoice.customer) {
-                setInvoice({...invoice, customer: filteredCustomers[0].id});
+                setInvoice({...invoice, customer: data[0].id});
             }
         } catch (error) {
             console.log(error);
@@ -73,9 +74,11 @@ const InvoicePage = ({history, match}) => {
         try {
             if (editing) {
                 await InvoicesApi.update(id, invoice);
+                toast.info('Facture bien éditée.');
             }else{
                 console.log('create',invoice);
                 await InvoicesApi.create(invoice);
+                toast.info('Nouvelle facture ajoutée.');
             }
             setErrors({});
             history.replace("/invoices");

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 import PaginationComponent from '../Components/PaginationComponent';
 import CustomersApi from '../Services/CustomersApi';
@@ -48,9 +49,11 @@ const CustomersPage = (props) => {
 
         try {
             await CustomersApi.delete(id);
+            toast.success('Client supprimé !');
         } catch (error) {
             console.log(error);
             setCustomers(originalCustomers);
+            toast.error('Erreur de suppression !');
         }
     }
 

@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import {toast} from 'react-toastify';
+
 import Field from '../Components/Forms/Field';
 import CustomersApi from '../Services/CustomersApi';
 
@@ -62,12 +64,12 @@ const CustomerPage = ({match, history}) => {
             if (editing) {
                 // si édition on update un customer
                 await CustomersApi.update(id, customer);
-                //TODO flash
+                toast.info('Le client a bien été modifié.');
                 history.replace('/customers');
             }else{
                 //sinon crée un customer
                 await CustomersApi.create(customer);
-                //TODO flash
+                toast.info('Un nouveau client a été ajouté.');
                 history.replace('/customers');
             }
             setError({});

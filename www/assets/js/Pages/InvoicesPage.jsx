@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import {toast} from 'react-toastify';
 
 import moment from "moment";
 import PaginationComponent from '../Components/PaginationComponent';
@@ -44,9 +45,11 @@ const InvoicesPages = (props) => {
 
         try {
             await InvoicesApi.delete(id);
+            toast.success('Facture supprimée !');
         } catch (error) {
             console.log(error);
             setInvoices(originalInvoices);
+            toast.error('Erreur de suppression');
         }
     }
 

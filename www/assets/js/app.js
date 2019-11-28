@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import ReactDom from 'react-dom';
 import { HashRouter, Switch, Route, withRouter } from 'react-router-dom';
+import {ToastContainer} from 'react-toastify';
 
 import AuthContext from './Contexts/AuthContext';
 import Navbar from './Components/Navbar';
@@ -14,6 +15,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import CustomerPage from './Pages/CustomerPage';
 import InvoicePage from './Pages/InvoicePage';
 
+import 'react-toastify/dist/ReactToastify.css';
 require('../css/app.css');
 
 const App = () => { 
@@ -46,6 +48,7 @@ const App = () => {
                     </Switch>
                 </main>
             </HashRouter>
+            <ToastContainer position="bottom-left" />
         </AuthContext.Provider>
     )
 };
