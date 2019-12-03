@@ -1,5 +1,7 @@
 import Axios from "axios";
 import Cache from "./Cache";
+import { INVOICES_API } from "../config";
+
 
 async function findAll() {
     const cachedInvoices = await Cache.get('invoices');
@@ -8,7 +10,7 @@ async function findAll() {
         return cachedInvoices;
     }
 
-    return Axios.get('http://localhost:8180/api/invoices')
+    return Axios.get(INVOICES_API)
         .then(response => {
             const invoices = response.data['hydra:member'];
             Cache.set('invoices', invoices);
@@ -17,12 +19,12 @@ async function findAll() {
 }
 
 const find = (id) => {
-    return Axios.get('http://localhost:8180/api/invoices/'+id)
+    return Axios.get(INVOICES_API + '/' +id)
                 .then(response => response.data);
 }
 
 function deleteInvoice(id) {
-    return Axios.delete('http://localhost:8180/api/invoices/'+id)
+    return Axios.delete(INVOICES_API + '/' +id)
                 .then(async response => {
                     const cachedInvoices = await Cache.get('invoices');
                     if (cachedInvoices) {
@@ -33,7 +35,7 @@ function deleteInvoice(id) {
 }
 
 const create = (invoice) => {
-    return Axios.post('http://localhost:8180/api/invoices',
+    return Axios.post(INVOICES_API,
                     {...invoice, customer: 'api/customers/'+invoice.customer})
                     .then(async response => {
                         const cachedInvoices = await Cache.get('invoices');
@@ -45,7 +47,7 @@ const create = (invoice) => {
 }
 
 const update = (id, invoice) => {
-    return Axios.put('http://localhost:8180/api/invoices/'+id, 
+    return Axios.put(INVOICES_API+ '/' +id, 
                     {...invoice, customer: 'api/customers/'+invoice.customer})
                     .then(async response => {
                         const cachedInvoices = await Cache.get('invoices');

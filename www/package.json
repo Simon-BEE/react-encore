@@ -16,6 +16,7 @@
     "dependencies": {
         "@babel/preset-react": "^7.0.0--dev",
         "axios": "0.18.1",
+        "dotenv": "^8.2.0",
         "jwt-decode": "^2.2.0",
         "moment": "^2.24.0",
         "react": "16.8.6",
